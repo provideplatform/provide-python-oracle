@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 backports-abc = "*"
-ipfshttpclient = '*'
+bs4 = '*'
 prvd = "*"
 tornado = "*"
 

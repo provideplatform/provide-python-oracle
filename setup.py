@@ -15,6 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'backports-abc',
+        'bs4',
         'prvd',
         'tornado',
     ],
