@@ -1,3 +1,1 @@
-'''prvd'''
-
-__all__ = ['main']
+'''prvdoracle'''

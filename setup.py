@@ -16,6 +16,8 @@ setuptools.setup(
     install_requires=[
         'backports-abc',
         'bs4',
+        'numpy',
+        'openalpr',
         'prvd',
         'tornado',
     ],

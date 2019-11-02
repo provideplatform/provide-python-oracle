@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 backports-abc = "*"
 bs4 = '*'
+numpy = '*'
+openalpr = '*'
 prvd = "*"
 tornado = "*"
 
@@ -17,4 +19,5 @@ pylint = "<2.0.0"
 python_version = "2.7"
 
 [scripts]
-run = "python prvdoracle/main.py"
+oracle = "python prvdoracle/main.py"
+lpr = "python prvdoracle/lprmain.py"
