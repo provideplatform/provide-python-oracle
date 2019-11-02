@@ -15,8 +15,10 @@ License plate recognition service.
 class LPR(object):
 
     DEFAULT_LPR_MAX_RESULTS = 3
+    DEFAULT_OPENALPR_CONFIG_PATH = '/usr/share/openalpr/config/openalpr.defaults.conf'
+    DEFAULT_OPENALPR_RUNTIME_DATA_PATH = '/usr/share/openalpr/runtime_data'
 
-    def __init__(self, country='us', openalpr_config_path='./open-alpr.conf', openalpr_runtime_data_path='./openalpr-tmp'):
+    def __init__(self, country='us', openalpr_config_path=LPR.DEFAULT_OPENALPR_CONFIG_PATH, openalpr_runtime_data_path=LPR.DEFAULT_OPENALPR_RUNTIME_DATA_PATH):
         '''Initializer.'''
         self.alpr = None
         self.country = country
@@ -31,12 +33,12 @@ class LPR(object):
         try:
             self.alpr = Alpr(self.country, self.alpr_config_path, self.alpr_runtime_data_path)
             if not self.alpr.is_loaded():
-                logger.warning('failed to bootstrap openalpr')
+                logger.warning('XXXfailed to bootstrap openalpr')
             self.alpr.set_top_n(LPR.DEFAULT_LPR_MAX_RESULTS)
             self.alpr.set_detect_region(True)
             # alpr.set_default_region('')
-        except:
-            logger.warning('failed to bootstrap openalpr')
+        except Exception as e:
+            logger.warning('failed to bootstrap openalpr; {}'.format(e))
 
     @tornado.gen.coroutine
     def unload(self):
