@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='prvdoracle',
-    version='0.0.0',
+    version='0.0.1',
     author='Kyle Thomas',
     author_email='kyle@provide.services',
     description='Provide oracle base architecture and runloop',
