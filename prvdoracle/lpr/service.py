@@ -18,7 +18,7 @@ class LPR(object):
     DEFAULT_OPENALPR_CONFIG_PATH = '/usr/share/openalpr/config/openalpr.defaults.conf'
     DEFAULT_OPENALPR_RUNTIME_DATA_PATH = '/usr/share/openalpr/runtime_data'
 
-    def __init__(self, country='us', openalpr_config_path=LPR.DEFAULT_OPENALPR_CONFIG_PATH, openalpr_runtime_data_path=LPR.DEFAULT_OPENALPR_RUNTIME_DATA_PATH):
+    def __init__(self, country='us', openalpr_config_path=DEFAULT_OPENALPR_CONFIG_PATH, openalpr_runtime_data_path=DEFAULT_OPENALPR_RUNTIME_DATA_PATH):
         '''Initializer.'''
         self.alpr = None
         self.country = country
