@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+backports-abc = "*"
+ipfshttpclient = '*'
+prvd = "*"
+tornado = "*"
+
+[dev-packages]
+twine = "*"
+pylint = "<2.0.0"
+
+[requires]
+python_version = "2.7"
+
+[scripts]
+run = "python prvdoracle/main.py"
