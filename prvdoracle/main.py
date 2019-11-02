@@ -5,14 +5,11 @@ import logging
 import os
 import sys
 import time
+import tornado
 import uuid
 
-import tornado.ioloop
-import tornado.gen
-import tornado.process
-from tornado.ioloop import IOLoop
-
 from prvd.message_bus import MessageBus
+from tornado.ioloop import IOLoop
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
