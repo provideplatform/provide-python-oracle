@@ -136,11 +136,11 @@
         },
         "prvd": {
             "hashes": [
-                "sha256:04f26dd71676836ba0719c813a7407638e47be2a1af6ed0869463b75fbbaebc6",
-                "sha256:29ba03cba707e7b4a9b67133d5a213fe3799b3146fe29fb81956688fd0fb1744"
+                "sha256:386b65d3eec3cb45693db5b0a2bec7e02cdf147be9c3c2f8d7aedbdd823f11ba",
+                "sha256:adc9ab5aa02fbf118092bbc2ade58bc95780f63be2d3a9246325baab99ac0ef2"
             ],
             "index": "pypi",
-            "version": "==0.1.5"
+            "version": "==0.1.6"
         },
         "pyjwt": {
             "hashes": [
