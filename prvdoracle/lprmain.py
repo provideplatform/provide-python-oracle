@@ -45,7 +45,7 @@ class LPROracle(ProvideOracle):
         logger.info('attempting to publish lpr recognition message')
         candidates = params.get('results', [])
         if len(candidates) > 0:
-            vehicle_details = VehicleEnrichment('us', 'KY', candidates[0]['plate']).enrich()
+            vehicle_details = yield VehicleEnrichment('us', 'KY', candidates[0]['plate']).enrich()
             vehicle_details['lpr'] = candidates
             self.message_bus.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT, json.dumps(vehicle_details, indent=2))
 

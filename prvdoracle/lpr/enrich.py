@@ -3,6 +3,7 @@
 import logging
 import requests
 import tornado
+import tornado.gen
 
 import base64
 from bs4 import BeautifulSoup
@@ -86,4 +87,4 @@ class VehicleEnrichment(object):
         vehicle_details['model'] = vehicle_details['build_data']['model']
         vehicle_details['trim'] = vehicle_details['build_data']['trim']
 
-        return vehicle_details
+        raise gen.Return(vehicle_details)
