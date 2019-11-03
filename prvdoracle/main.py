@@ -23,22 +23,26 @@ class ProvideOracle(object):
         '''Initializer.'''
         logger.info('provide oracle instance initialized')
 
-    def configure(self, token, wallet_addr):
+    def configure(self, token, wallet_addr, multipart_chunk_size):
         '''Configure the oracle with the Provide API token and wallet address.'''
         self.token = token
         self.wallet_addr = wallet_addr
+        self.multipart_chunk_size = multipart_chunk_size
         logger.info('provide oracle instance configured with wallet address: {}'.format(self.wallet_addr))
 
     @tornado.gen.coroutine
     def publish_message(self, subject, msg):
         '''Publish a message on a specific subject using the message bus.'''
-        logger.info('oracle publishing message on subject: {}'.format(subject))
-        self.message_bus.publish_message(subject, msg)
+        try:
+            logger.info('oracle attempting to publish {}-byte message on subject: {}'.format(len(msg), subject))
+            self.message_bus.publish_message(subject, msg)
+        except Exception as e:
+            logger.warning('oracle failed to publish {}-byte message via message bus; {}'.format(len(msg), e))
 
     @tornado.gen.coroutine
     def start(self):
         '''Attempt to start the provide-oracle instance using the configured environment.'''
-        self.message_bus = MessageBus(self.token, self.wallet_addr)
+        self.message_bus = MessageBus(self.token, self.wallet_addr, self.multipart_chunk_size)
         logger.info('provide oracle instance started with message bus application id: {}'.format(self.message_bus.application_id))
 
     @tornado.gen.coroutine
@@ -51,6 +55,7 @@ def bootstrap(oracle_instance=None):
     '''Bootstrap.'''
     token = os.environ.get('PROVIDE_API_TOKEN', None)
     wallet_addr = os.environ.get('PROVIDE_WALLET_ADDRESS', None)
+    multipart_chunk_size = int(os.environ.get('PROVIDE_MULTIPART_CHUNKSIZE', MessageBus.DEFAULT_MULTIPART_CHUNK_SIZE))
     if token == None or wallet_addr == None:
         raise Exception('provide oracle requires PROVIDE_API_TOKEN and PROVIDE_WALLET_ADDRESS set in the environment')
 
@@ -65,7 +70,7 @@ def bootstrap(oracle_instance=None):
         for _ in range(worker_count):
             try:
                 instance = oracle_instance if oracle_instance != None else ProvideOracle()
-                instance.configure(token, wallet_addr)
+                instance.configure(token, wallet_addr, multipart_chunk_size)
                 instances.append(instance)
 
                 if tornado.process.task_id() != 0:
