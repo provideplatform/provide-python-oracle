@@ -2,6 +2,7 @@
 
 import logging
 import os
+import uuid
 
 import tornado
 import tornado.gen
@@ -34,8 +35,9 @@ class ProvideOracle(object):
     def publish_message(self, subject, msg):
         '''Publish a message on a specific subject using the message bus.'''
         try:
-            logger.info('oracle attempting to publish {}-byte message on subject: {}'.format(len(msg), subject))
-            self.message_bus.publish_message(subject, msg)
+            filename = '{}.json'.format(uuid.uuid4())
+            logger.info('oracle attempting to publish {}-byte message {} on subject: {}'.format(len(msg), filename, subject))
+            self.message_bus.publish_message(subject, msg, filename=filename, wrap_with_directory=True)
         except Exception as e:
             logger.warning('oracle failed to publish {}-byte message via message bus; {}'.format(len(msg), e))
 
