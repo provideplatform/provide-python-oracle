@@ -1,5 +1,6 @@
 '''Main entrypoint and runloop for provide LPR oracle instances.'''
 
+import json
 import logging
 import os
 
@@ -17,6 +18,8 @@ LPR oracle main runloop.
 '''
 class LPROracle(ProvideOracle):
 
+    DEFAULT_MESSAGE_SUBJECT = 'lpr.recognized'
+
     def __init__(self):
         '''Initializer.'''
         super(LPROracle, self).__init__() 
@@ -26,7 +29,7 @@ class LPROracle(ProvideOracle):
     def start(self):
         '''Attempt to start the provide-oracle instance using the configured environment.'''
         super(LPROracle, self).start() 
-        self.lpr = LPR()
+        self.lpr = LPR(self.recognize)
         logger.info('started provide LPR oracle instance')
 
     @tornado.gen.coroutine
@@ -34,6 +37,13 @@ class LPROracle(ProvideOracle):
         '''Attempt to gracefully shutdown provide LPR oracle instance.'''
         super(LPROracle, self).shutdown() 
         self.lpr.unload()
+
+    @tornado.gen.coroutine
+    def recognize(self, params):
+        '''Handle the successful recognition of a license plate.'''
+        logger.info('attempting to publish lpr recognition messation')
+        self.message_bus.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT, json.dumps(params, indent=2))
+
 
 if __name__ == '__main__':
     bootstrap(LPROracle())
