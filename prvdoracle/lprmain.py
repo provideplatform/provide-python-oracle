@@ -8,6 +8,7 @@ import tornado.gen
 
 from main import bootstrap, ProvideOracle
 from lpr.service import LPR
+from lpr.enrich import VehicleEnrichment
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -41,8 +42,12 @@ class LPROracle(ProvideOracle):
     @tornado.gen.coroutine
     def recognize(self, params):
         '''Handle the successful recognition of a license plate.'''
-        logger.info('attempting to publish lpr recognition messation')
-        self.message_bus.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT, json.dumps(params, indent=2))
+        logger.info('attempting to publish lpr recognition message')
+        candidates = params.get('results', [])
+        if len(candidates) > 0:
+            vehicle_details = VehicleEnrichment('us', 'KY', candidates[0]['plate']).enrich()
+            vehicle_details['lpr'] = candidates
+            self.message_bus.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT, json.dumps(vehicle_details, indent=2))
 
 
 if __name__ == '__main__':
