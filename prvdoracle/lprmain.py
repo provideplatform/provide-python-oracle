@@ -46,8 +46,9 @@ class LPROracle(ProvideOracle):
         candidates = params.get('results', [])
         if len(candidates) > 0:
             vehicle_details = yield VehicleEnrichment('us', 'KY', candidates[0]['plate']).enrich()
-            vehicle_details['lpr'] = candidates
-            self.message_bus.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT, json.dumps(vehicle_details, indent=2))
+            vehicle_details['lpr'] = params
+            self.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT,
+                                 json.dumps(vehicle_details, indent=2).encode('utf-8'))
 
 
 if __name__ == '__main__':
