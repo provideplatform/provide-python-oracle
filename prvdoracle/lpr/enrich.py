@@ -87,4 +87,4 @@ class VehicleEnrichment(object):
         vehicle_details['model'] = vehicle_details['build_data']['model']
         vehicle_details['trim'] = vehicle_details['build_data']['trim']
 
-        raise gen.Return(vehicle_details)
+        raise tornado.gen.Return(vehicle_details)
