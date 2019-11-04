@@ -79,7 +79,7 @@ class VehicleEnrichment(object):
                 key = item.get('data-title', None)
                 if key != None and len(item.contents) == 1:
                     k = reduce(lambda s0, s1: s0 + ('_' if s1.isupper() else '') + s1, key).lower() 
-                    vehicle_details['build_data'][k]= item.contents[0]
+                    vehicle_details['build_data'][k]= item.contents[0].strip()
 
         # ymmt
         vehicle_details['year'] = vehicle_details['build_data']['model_year']
