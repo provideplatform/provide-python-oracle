@@ -82,9 +82,9 @@ class VehicleEnrichment(object):
                     vehicle_details['build_data'][k]= item.contents[0].strip()
 
         # ymmt
-        vehicle_details['year'] = vehicle_details['build_data']['model_year']
-        vehicle_details['make'] = vehicle_details['build_data']['make']
-        vehicle_details['model'] = vehicle_details['build_data']['model']
-        vehicle_details['trim'] = vehicle_details['build_data']['trim']
+        vehicle_details['year'] = vehicle_details['build_data'].get('model_year', None)
+        vehicle_details['make'] = vehicle_details['build_data'].get('model', None)
+        vehicle_details['model'] = vehicle_details['build_data'].get('model', None)
+        vehicle_details['trim'] = vehicle_details['build_data'].get('trim', None)
 
         raise tornado.gen.Return(vehicle_details)
