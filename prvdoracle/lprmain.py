@@ -45,12 +45,12 @@ class LPROracle(ProvideOracle):
         '''Handle the successful recognition of a license plate.'''
         logger.info('attempting to publish lpr recognition message')
         candidates = params.get('results', [])
-        if len(candidates) > 0:
-            for state in LPROracle.SUPPORTED_STATES:
-                vehicle_details = yield VehicleEnrichment('us', state, candidates[0]['plate']).enrich()
-                vehicle_details['lpr'] = params
-                self.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT,
-                                     json.dumps(vehicle_details, indent=2).encode('utf-8'))
+        state = params.get('state', None)
+        if len(candidates) > 0 and state != None:
+            vehicle_details = yield VehicleEnrichment('us', state, candidates[0]['plate']).enrich()
+            vehicle_details['lpr'] = params
+            self.publish_message(LPROracle.DEFAULT_MESSAGE_SUBJECT,
+                                 json.dumps(vehicle_details, indent=2).encode('utf-8'))
 
 
 if __name__ == '__main__':
