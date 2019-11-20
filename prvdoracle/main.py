@@ -75,10 +75,10 @@ def bootstrap(message_bus):
 if __name__ == '__main__':
     # main entrypoint
     # if len(sys.argv) != 2:
-    #     raise IOError('Invalid usage; the correct format is: main.py <token> <wallet_addr>')
+    #     raise IOError('Invalid usage; the correct format is: main.py <token> <account_addr>')
     token = os.environ.get('PROVIDE_API_TOKEN', None)
-    wallet_addr = os.environ.get('PROVIDE_WALLET_ADDRESS', None)
-    if token == None or wallet_addr == None:
-        raise IOError('provide oracle requires PROVIDE_API_TOKEN and PROVIDE_WALLET_ADDRESS set in the environment')
-    message_bus = MessageBus(token, wallet_addr)
+    account_addr = os.environ.get('PROVIDE_ACCOUNT_ADDRESS', None)
+    if token == None or account_addr == None:
+        raise IOError('provide oracle requires PROVIDE_API_TOKEN and PROVIDE_ACCOUNT_ADDRESS set in the environment')
+    message_bus = MessageBus(token, account_addr)
     bootstrap(message_bus)
